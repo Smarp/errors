@@ -25,6 +25,13 @@ var _ = Describe("Error Test:", func() {
 		Expect(err.Type()).To(Equal(Placebo))
 		Expect(err.Error()).To(Equal("Placebo{Key: Val};Some error;Other error"))
 	})
+	It("should add our error to stack", func() {
+		err := New(Placebo, map[string]interface{}{"Key": "Val"}).
+			Add(New(Aspirin, nil)).
+			Add(New(Ibuprofen, nil))
+		Expect(err.Type()).To(Equal(Placebo))
+		Expect(err.Error()).To(Equal("Placebo{Key: Val};Aspirin;Ibuprofen"))
+	})
 	It("should wrap error to Errors", func() {
 		e := errors.New("Some error")
 		err := Wrap(e)

@@ -35,7 +35,7 @@ func (e Errors) Type() interface{} {
 }
 
 func (e Errors) Add(ee error) Errors {
-	return append(e, Wrap(ee)[0])
+	return append(e, Wrap(ee)...)
 }
 
 func New(e stringer, meta map[string]interface{}) Errors {
